@@ -11,6 +11,7 @@
   - [process_ntds.py](#process_ntdspy)
   - [password_analyzer.py](#password_analyzerpy)
   - [remove_duplicates.py](#remove_duplicatespy)
+  - [responder2hashcat.py](#responder2hashcatpy)
 - [Requirements](#requirements)
 - [Usage Examples](#usage-examples)
 - [File Formats](#file-formats)
@@ -282,6 +283,61 @@ Removing duplicates...
 Duplicates removed successfully!
 Original file backed up as: usernames.txt.backup
 ```
+
+### responder2hashcat.py
+
+**Purpose:** Processes Responder's NTLMv1/2 challenge/response captures and converts them into Hashcat-compatible formats. It filters valid NTLM authentication attempts and separates them from malformed or invalid entries.
+
+**Features:**
+- Validates NTLM response formats
+- Separates valid hashes from invalid entries
+- Provides detailed processing statistics
+- Handles file I/O errors gracefully
+- Supports custom output file paths
+- Shows progress and summary of processed entries
+
+**Usage:**
+```bash
+python responder2hashcat.py <input_file> [output_file] [rejects_file]
+```
+
+**Arguments:**
+- `input_file`    Path to the Responder capture file (required)
+- `output_file`   Path to save valid Hashcat-compatible hashes (default: clean.txt)
+- `rejects_file`  Path to save rejected/invalid entries (default: rejects.txt)
+
+**Example:**
+```bash
+python responder2hashcat.py Responder-Session.log valid_hashes.txt invalid_entries.txt
+
+Processing: Responder-Session.log
+Valid hashes will be saved to: valid_hashes.txt
+Invalid entries will be saved to: invalid_entries.txt
+
+Processing complete!
+Total entries processed: 1245
+Accepted (valid) hashes: 1020 (81.9%)
+Rejected entries: 225 (18.1%)
+```
+
+**Input Format:**
+```
+username::domain:challenge:response:response
+USERNAME::DOMAIN:1122334455667788:00112233445566778899AABBCCDDEEFF:00112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF
+```
+
+**Output Format (valid hashes):**
+```
+username::domain:challenge:response:response
+```
+
+**Notes:**
+- Only lines matching the NTLM response pattern are considered valid
+- Empty lines in the input are automatically skipped
+- The script handles file encoding issues automatically
+- Progress is shown for large files
+
+---
 
 ## Requirements
 
