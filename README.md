@@ -5,16 +5,19 @@
 ## Table of Contents
 
 - [Overview](#overview)
+- [Installation](#installation)
 - [Scripts](#scripts)
-  - [split-credentials.py](#split-credentialspy)
-  - [combine-list-passwords.py](#combine-list-passwordspy)
+  - [split_credentials.py](#split_credentialspy)
+  - [combine_list_passwords.py](#combine_list_passwordspy)
   - [process_ntds.py](#process_ntdspy)
   - [password_analyzer.py](#password_analyzerpy)
   - [remove_duplicates.py](#remove_duplicatespy)
   - [responder2hashcat.py](#responder2hashcatpy)
-- [Requirements](#requirements)
+- [Running the Tools](#running-the-tools)
+- [Testing](#testing)
 - [Usage Examples](#usage-examples)
 - [File Formats](#file-formats)
+- [Project Structure](#project-structure)
 
 ## Overview
 
@@ -26,9 +29,40 @@ This toolkit provides utilities for security professionals and researchers to pr
 - Analyzing password frequency and patterns
 - Removing duplicate entries from files
 
+## Installation
+
+### Prerequisites
+- Python 3.6 or higher
+- pip (Python package installer)
+
+### Install from Source
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/CredForge.git
+cd CredForge
+```
+
+2. Install the package in development mode:
+```bash
+pip install -e .
+```
+
+3. Install development dependencies (for testing):
+```bash
+pip install -r requirements-dev.txt
+```
+
+### Verify Installation
+
+```bash
+# Test that the package is installed correctly
+python -c "import credforge; print('CredForge installed successfully!')"
+```
+
 ## Scripts
 
-### split-credentials.py
+### split_credentials.py
 
 **Purpose:** Splits credential files containing username:hash:password entries into separate files for usernames, passwords, hashes, and combined formats.
 
@@ -42,7 +76,9 @@ This toolkit provides utilities for security professionals and researchers to pr
 
 **Usage:**
 ```bash
-python split-credentials.py
+python -m credforge.split_credentials
+# OR
+python credforge/split_credentials.py
 ```
 
 **Interactive Prompts:**
@@ -77,7 +113,7 @@ Output:
 
 ---
 
-### combine-list-passwords.py
+### combine_list_passwords.py
 
 **Purpose:** Matches cracked passwords with NTDS hash dumps to create username:hash:password credential files.
 
@@ -90,7 +126,9 @@ Output:
 
 **Usage:**
 ```bash
-python combine-list-passwords.py
+python -m credforge.combine_list_passwords
+# OR
+python credforge/combine_list_passwords.py
 ```
 
 **Interactive Prompts:**
@@ -147,7 +185,9 @@ Results written to matched_credentials.txt
 
 **Usage:**
 ```bash
-python process_ntds.py -w <input_ntds_file> -o <output_file>
+python -m credforge.process_ntds -w <input_ntds_file> -o <output_file>
+# OR
+python credforge/process_ntds.py -w <input_ntds_file> -o <output_file>
 ```
 
 **Arguments:**
@@ -196,7 +236,9 @@ Active accounts written to active_accounts.ntds: 6,750 (67.5%)
 
 **Usage:**
 ```bash
-python password_analyzer.py <password_file>
+python -m credforge.password_analyzer <input_file>
+# OR
+python credforge/password_analyzer.py <input_file>
 ```
 
 **Arguments:**
@@ -254,10 +296,14 @@ Rank  Password                     Count      % of Total
 **Usage:**
 ```bash
 # Analyze and modify in-place
-python remove_duplicates.py <input_file>
+python -m credforge.remove_duplicates <input_file>
+# OR
+python credforge/remove_duplicates.py <input_file>
 
 # Save to new file
-python remove_duplicates.py <input_file> <output_file>
+python -m credforge.remove_duplicates <input_file> <output_file>
+# OR
+python credforge/remove_duplicates.py <input_file> <output_file>
 ```
 
 **Arguments:**
@@ -298,7 +344,9 @@ Original file backed up as: usernames.txt.backup
 
 **Usage:**
 ```bash
-python responder2hashcat.py <input_file> [output_file] [rejects_file]
+python -m credforge.responder2hashcat <input_file> [output_file] [rejects_file]
+# OR
+python credforge/responder2hashcat.py <input_file> [output_file] [rejects_file]
 ```
 
 **Arguments:**
@@ -339,10 +387,76 @@ username::domain:challenge:response:response
 
 ---
 
+## Running the Tools
+
+CredForge tools can be run in two ways:
+
+### Method 1: As Python Modules (Recommended)
+```bash
+python -m credforge.tool_name [arguments]
+```
+
+### Method 2: Direct Script Execution
+```bash
+python credforge/tool_name.py [arguments]
+```
+
+### Available Tools
+- `split_credentials` - Split credential files into components
+- `combine_list_passwords` - Match passwords with NTDS dumps
+- `process_ntds` - Filter NTDS dumps by account status
+- `password_analyzer` - Analyze password patterns and frequency
+- `remove_duplicates` - Remove duplicate entries from files
+- `responder2hashcat` - Convert Responder captures to Hashcat format
+
+## Testing
+
+### Running All Tests
+```bash
+# Run all tests with pytest
+pytest
+
+# Run tests with verbose output
+pytest -v
+
+# Run tests with coverage report
+pytest --cov=credforge
+
+# Run tests and generate HTML coverage report
+pytest --cov=credforge --cov-report=html
+```
+
+### Running Specific Tests
+```bash
+# Test a specific module
+pytest tests/test_split_credentials.py
+
+# Test a specific function
+pytest tests/test_password_analyzer.py::test_analyze_passwords
+
+# Run tests matching a pattern
+pytest -k "test_split"
+```
+
+### Test Structure
+The test suite includes comprehensive tests for all modules:
+- `tests/test_combine_list_passwords.py` - Tests for password matching functionality
+- `tests/test_password_analyzer.py` - Tests for password analysis features
+- `tests/test_process_ntds.py` - Tests for NTDS processing
+- `tests/test_remove_duplicates.py` - Tests for duplicate removal
+- `tests/test_responder2hashcat.py` - Tests for Responder conversion
+- `tests/test_split_credentials.py` - Tests for credential splitting
+
+### Test Configuration
+Test configuration is managed through:
+- `pytest.ini` - Pytest configuration
+- `tests/conftest.py` - Shared test fixtures and utilities
+
 ## Requirements
 
 - Python 3.6 or higher
-- No external dependencies (uses only standard library)
+- No external dependencies for core functionality (uses only standard library)
+- Development dependencies (for testing): pytest, pytest-cov
 
 ## Usage Examples
 
@@ -350,31 +464,31 @@ username::domain:challenge:response:response
 
 1. **Process NTDS dump to get active accounts:**
 ```bash
-python process_ntds.py -w domain_dump.ntds -o active_accounts.ntds
+python -m credforge.process_ntds -w domain_dump.ntds -o active_accounts.ntds
 ```
 
 2. **Match cracked passwords with active accounts:**
 ```bash
-python combine-list-passwords.py
+python -m credforge.combine_list_passwords
 # Input: cracked_passwords.txt, active_accounts.ntds
 # Output: matched_credentials.txt
 ```
 
 3. **Split credentials into separate files:**
 ```bash
-python split-credentials.py
+python -m credforge.split_credentials
 # Input: matched_credentials.txt
 # Output: multiple separated files
 ```
 
 4. **Analyze password patterns:**
 ```bash
-python password_analyzer.py matched_credentials_passwords.txt
+python -m credforge.password_analyzer matched_credentials_passwords.txt
 ```
 
 5. **Remove duplicates from any file:**
 ```bash
-python remove_duplicates.py matched_credentials_usernames.txt
+python -m credforge.remove_duplicates matched_credentials_usernames.txt
 ```
 
 ### Batch Processing
@@ -382,16 +496,27 @@ python remove_duplicates.py matched_credentials_usernames.txt
 For processing multiple files, you can use these scripts in batch:
 
 ```bash
-# Process multiple NTDS files
+# Process multiple NTDS files (Linux/Mac)
 for file in *.ntds; do
-    python process_ntds.py -w "$file" -o "active_${file}"
+    python -m credforge.process_ntds -w "$file" -o "active_${file}"
 done
 
-# Analyze multiple password files
+# Process multiple NTDS files (Windows PowerShell)
+Get-ChildItem *.ntds | ForEach-Object {
+    python -m credforge.process_ntds -w $_.Name -o "active_$($_.Name)"
+}
+
+# Analyze multiple password files (Linux/Mac)
 for file in *_passwords.txt; do
     echo "Analyzing $file"
-    python password_analyzer.py "$file" > "${file%.txt}_analysis.txt"
+    python -m credforge.password_analyzer "$file" > "${file%.txt}_analysis.txt"
 done
+
+# Analyze multiple password files (Windows PowerShell)
+Get-ChildItem *_passwords.txt | ForEach-Object {
+    Write-Host "Analyzing $($_.Name)"
+    python -m credforge.password_analyzer $_.Name > "$($_.BaseName)_analysis.txt"
+}
 ```
 
 ## File Formats
@@ -422,6 +547,38 @@ password2
 password3
 ```
 
+## Project Structure
+
+```
+CredForge/
+├── credforge/                 # Main package directory
+│   ├── __init__.py           # Package initialization
+│   ├── combine_list_passwords.py
+│   ├── password_analyzer.py
+│   ├── process_ntds.py
+│   ├── remove_duplicates.py
+│   ├── responder2hashcat.py
+│   ├── setup.py
+│   └── split_credentials.py
+├── tests/                    # Test suite
+│   ├── __init__.py
+│   ├── conftest.py          # Test configuration and fixtures
+│   ├── test_combine_list_passwords.py
+│   ├── test_password_analyzer.py
+│   ├── test_process_ntds.py
+│   ├── test_remove_duplicates.py
+│   ├── test_responder2hashcat.py
+│   └── test_split_credentials.py
+├── debug/                    # Debug files and development artifacts
+├── .gitignore               # Git ignore rules
+├── .coverage                # Coverage data
+├── pyproject.toml           # Project configuration
+├── pytest.ini              # Pytest configuration
+├── requirements-dev.txt     # Development dependencies
+├── run_tests.py            # Test runner script
+└── README.md               # This file
+```
+
 ## Notes
 
 - Always backup original files before processing
@@ -429,6 +586,8 @@ password3
 - Progress indicators are shown for large file processing
 - All scripts provide detailed error messages and usage instructions
 - Files are processed with UTF-8 encoding by default
+- Debug files and development artifacts are stored in the `debug/` folder
+- Comprehensive test suite ensures reliability and correctness
 
 ## Security Considerations
 
@@ -436,7 +595,22 @@ password3
 - Ensure proper handling and storage of sensitive credential data
 - Follow your organization's data handling policies
 - Consider encrypting processed files containing sensitive information
+- The `.gitignore` file is configured to prevent accidental commit of sensitive files
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Run the tests (`pytest`)
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+## License
+
+This project is intended for educational and authorized security testing purposes only.
 
 ---
 
-*Last updated: 2025-07-30*
+*Last updated: 2025-07-31*

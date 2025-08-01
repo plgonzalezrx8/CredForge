@@ -121,8 +121,8 @@ def main():
     if len(sys.argv) < 2:
         print("Usage: python split-credentials.py <input_file> [output_directory]")
         print("\nExample:")
-        print("  python split-credentials.py Userandpasswords2.txt")
-        print("  python split-credentials.py Userandpasswords2.txt ./output/")
+        print("  python split-credentials.py Userandpasswords.txt")
+        print("  python split-credentials.py Userandpasswords.txt ./output/")
         sys.exit(1)
     
     input_file = sys.argv[1]
