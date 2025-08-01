@@ -17,12 +17,12 @@ def test_process_password_files_basic(temp_dir):
     with open(cracked_file, 'w', encoding='utf-8') as f:
         f.write('\n'.join(cracked_data) + '\n')
     
-    # Create a test hash file (format: username:hash:...)
+    # Create a test hash file (NTDS format: username:rid:lmhash:ntlmhash:::)
     hash_file = temp_dir / "hashes.txt"
     hash_data = [
-        "user1:hash1:other:data",
-        "user2:hash2:other:data",
-        "user3:hash4:other:data"  # hash4 is not in cracked file
+        "user1:1001:aad3b435b51404eeaad3b435b51404ee:hash1:::",
+        "user2:1002:aad3b435b51404eeaad3b435b51404ee:hash2:::",
+        "user3:1003:aad3b435b51404eeaad3b435b51404ee:hash4:::"  # hash4 is not in cracked file
     ]
     with open(hash_file, 'w', encoding='utf-8') as f:
         f.write('\n'.join(hash_data) + '\n')
@@ -55,10 +55,10 @@ def test_process_password_files_no_matches(temp_dir):
     with open(cracked_file, 'w', encoding='utf-8') as f:
         f.write("hash1:password1\n")
     
-    # Create a test hash file with no matching hashes
+    # Create a test hash file with no matching hashes (NTDS format)
     hash_file = temp_dir / "hashes.txt"
     with open(hash_file, 'w', encoding='utf-8') as f:
-        f.write("user1:different_hash:other:data\n")
+        f.write("user1:1001:aad3b435b51404eeaad3b435b51404ee:different_hash::::\n")
     
     # Output file path
     output_file = temp_dir / "output.txt"

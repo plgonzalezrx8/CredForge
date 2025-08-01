@@ -1,0 +1,7 @@
+CORP\john.doe:5fbc3d5fec8206a30f4b6c473d68ae76:password123
+CORP\jane.smith:64f12cddaa88057e06a81b54e73b949b:welcome2024
+CORP\alice.brown:e19ccf75ee54e06b06a5907af13cef42:letmein
+CORP\mike.davis:2b576acbe6bcfda7248d7c0b8b479083:qwerty123
+CORP\tom.garcia:b4b9b02e6f09a9bd760f388b67351e2b:123456789
+CORP\lisa.martinez:6c269142c4fcdc6e8b8b5e6b8b8b8b8b:summer2024
+CORP\backup_user:c9b81d445b4c7c8b8b8b8b8b8b8b8b8b:backup2024
