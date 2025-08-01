@@ -389,14 +389,25 @@ username::domain:challenge:response:response
 
 ## Running the Tools
 
-CredForge tools can be run in two ways:
+CredForge tools can be run in three different ways:
 
-### Method 1: As Python Modules (Recommended)
+### Method 1: Console Commands (Easiest)
+After installation, CredForge creates executable commands that can be run directly:
+```bash
+credforge-split-credentials [arguments]
+credforge-combine-list-passwords [arguments]
+credforge-process-ntds [arguments]
+credforge-password-analyzer [arguments]
+credforge-remove-duplicates [arguments]
+credforge-responder2hashcat [arguments]
+```
+
+### Method 2: As Python Modules
 ```bash
 python -m credforge.tool_name [arguments]
 ```
 
-### Method 2: Direct Script Execution
+### Method 3: Direct Script Execution
 ```bash
 python credforge/tool_name.py [arguments]
 ```
@@ -464,11 +475,19 @@ Test configuration is managed through:
 
 1. **Process NTDS dump to get active accounts:**
 ```bash
+# Using console commands (easiest)
+credforge-process-ntds -w domain_dump.ntds -o active_accounts.ntds
+
+# OR using Python modules
 python -m credforge.process_ntds -w domain_dump.ntds -o active_accounts.ntds
 ```
 
 2. **Match cracked passwords with active accounts:**
 ```bash
+# Using console commands (easiest)
+credforge-combine-list-passwords
+
+# OR using Python modules
 python -m credforge.combine_list_passwords
 # Input: cracked_passwords.txt, active_accounts.ntds
 # Output: matched_credentials.txt
@@ -476,6 +495,10 @@ python -m credforge.combine_list_passwords
 
 3. **Split credentials into separate files:**
 ```bash
+# Using console commands (easiest)
+credforge-split-credentials matched_credentials.txt
+
+# OR using Python modules
 python -m credforge.split_credentials
 # Input: matched_credentials.txt
 # Output: multiple separated files
@@ -483,11 +506,19 @@ python -m credforge.split_credentials
 
 4. **Analyze password patterns:**
 ```bash
+# Using console commands (easiest)
+credforge-password-analyzer matched_credentials_passwords.txt
+
+# OR using Python modules
 python -m credforge.password_analyzer matched_credentials_passwords.txt
 ```
 
 5. **Remove duplicates from any file:**
 ```bash
+# Using console commands (easiest)
+credforge-remove-duplicates matched_credentials_usernames.txt
+
+# OR using Python modules
 python -m credforge.remove_duplicates matched_credentials_usernames.txt
 ```
 
