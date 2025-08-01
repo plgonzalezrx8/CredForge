@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=42"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "credforge"
+version = "0.1.0"
+description = "A collection of tools for credential processing and analysis."
+authors = [
+    { name = "CGPeteDev35", email = "cgpete.dev35@example.com" },
+]
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.scripts]
+credforge-split-credentials = "credforge.split_credentials:main"
+credforge-remove-duplicates = "credforge.remove_duplicates:main"
+credforge-password-analyzer = "credforge.password_analyzer:main"
+credforge-process-ntds = "credforge.process_ntds:main"
+credforge-combine-list-passwords = "credforge.combine_list_passwords:main"
+credforge-responder2hashcat = "credforge.responder2hashcat:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["credforge"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --tb=short"

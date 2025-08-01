@@ -1,0 +1,7 @@
+[console_scripts]
+credforge-combine-list-passwords = credforge.combine_list_passwords:main
+credforge-password-analyzer = credforge.password_analyzer:main
+credforge-process-ntds = credforge.process_ntds:main
+credforge-remove-duplicates = credforge.remove_duplicates:main
+credforge-responder2hashcat = credforge.responder2hashcat:main
+credforge-split-credentials = credforge.split_credentials:main

@@ -1,0 +1,16 @@
+# Development dependencies for CredForge
+
+# Testing
+pytest>=7.0.0
+pytest-cov>=3.0.0
+
+# Code style and linting
+black>=22.0.0
+flake8>=4.0.0
+isort>=5.0.0
+
+# Type checking
+mypy>=0.900
+
+# Test data generation
+pytest-mock>=3.0.0
