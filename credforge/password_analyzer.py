@@ -19,15 +19,12 @@ def analyze_passwords(password_file):
         with open(password_file, 'r', encoding='utf-8', errors='ignore') as f:
             passwords = [line.strip() for line in f if line.strip()]
     except FileNotFoundError:
-        print(f"Error: File '{password_file}' not found.", file=sys.stderr)
-        sys.exit(1)
+        raise FileNotFoundError(f"File '{password_file}' not found.")
     except Exception as e:
-        print(f"Error reading file: {e}", file=sys.stderr)
-        sys.exit(1)
+        raise Exception(f"Error reading file: {e}")
     
     if not passwords:
-        print("Error: The password file is empty.", file=sys.stderr)
-        sys.exit(1)
+        raise ValueError("No passwords found in the file.")
     
     # Count password occurrences
     password_counter = Counter(passwords)

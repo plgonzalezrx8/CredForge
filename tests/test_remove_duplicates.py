@@ -42,7 +42,7 @@ def test_remove_duplicates_in_place(temp_dir, sample_passwords):
         f.write('\n'.join(sample_passwords) + '\n')
     
     # Import the function to test
-    from remove_duplicates import remove_duplicates
+    from credforge.remove_duplicates import remove_duplicates
     
     # Get the original content
     with open(input_file, 'r', encoding='utf-8') as f:

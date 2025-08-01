@@ -96,6 +96,11 @@ def split_credentials(input_file, output_dir=None):
         with open(usernames_hashes_file, 'w', encoding='utf-8') as f:
             f.write('\n'.join(usernames_hashes) + '\n')
         
+        # Check if any credentials were processed
+        if len(usernames) == 0:
+            print(f"No valid credentials found in '{input_file}'")
+            return False
+        
         print(f"Successfully processed {len(usernames)} credentials from '{input_file}'")
         print(f"Output files created:")
         print(f"  - Usernames: {usernames_file}")

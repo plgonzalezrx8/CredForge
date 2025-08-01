@@ -53,7 +53,7 @@ def test_process_ntds_file_no_disabled(temp_dir):
     output_file = temp_dir / "active_accounts.ntds"
     
     # Import the function to test
-    from process_ntds import process_ntds_file
+    from credforge.process_ntds import process_ntds_file
     
     # Process the file
     process_ntds_file(str(input_file), str(output_file))
@@ -82,7 +82,7 @@ def test_process_ntds_file_all_disabled(temp_dir):
     output_file = temp_dir / "active_accounts.ntds"
     
     # Import the function to test
-    from process_ntds import process_ntds_file
+    from credforge.process_ntds import process_ntds_file
     
     # Process the file
     process_ntds_file(str(input_file), str(output_file))

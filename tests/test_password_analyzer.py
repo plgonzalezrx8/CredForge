@@ -25,7 +25,7 @@ def test_analyze_passwords_basic(temp_dir):
     result = analyze_passwords(str(input_file))
     
     # Verify the results
-    assert result['total_passwords'] == 8
+    assert result['total_passwords'] == 9  # 3 + 2 + 4 = 9 total passwords
     assert result['unique_passwords'] == 6
     
     # Check top passwords
@@ -51,7 +51,7 @@ def test_analyze_passwords_empty_file(temp_dir):
 
 def test_analyze_passwords_nonexistent_file():
     """Test analyze_passwords with a non-existent file."""
-    from password_analyzer import analyze_passwords
+    from credforge.password_analyzer import analyze_passwords
     
     with pytest.raises(FileNotFoundError):
         analyze_passwords("nonexistent_file.txt")

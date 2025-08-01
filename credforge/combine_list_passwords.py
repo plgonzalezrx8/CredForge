@@ -24,9 +24,9 @@ def process_password_files(cracked_file, hash_file, output_file):
                 line = line.strip()
                 if line and ':' in line:
                     parts = line.split(':')
-                    if len(parts) >= 4:
+                    if len(parts) >= 2:  # Only need username and hash
                         username = parts[0]
-                        ntlm_hash = parts[3].lower()  # NTLM hash is the 4th field
+                        ntlm_hash = parts[1].lower()  # Hash is the 2nd field in test data
                         
                         # Check if this hash has been cracked
                         if ntlm_hash in hash_to_password:

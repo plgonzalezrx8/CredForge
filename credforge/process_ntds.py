@@ -18,12 +18,12 @@ def is_account_disabled(ntds_line):
     """
     Check if an account is disabled based on the NTDS line.
     
-    The status is in the format: (status=Enabled) or (status=Disabled) at the end of the line.
+    The status is in the 5th field (index 4) of colon-separated values.
     """
-    # Check if the line contains a status indicator
-    status_match = re.search(r'\(status=(Enabled|Disabled)\)$', ntds_line.strip())
-    if status_match:
-        return status_match.group(1) == 'Disabled'
+    parts = ntds_line.strip().split(':')
+    if len(parts) >= 5:
+        status = parts[4].lower()
+        return status == 'disabled'
     return False
 
 def process_ntds_file(input_file, output_file):

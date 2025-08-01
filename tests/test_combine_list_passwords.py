@@ -1,5 +1,5 @@
 """
-Unit tests for combine-list-passwords.py
+Unit tests for combine_list_passwords.py
 """
 import os
 from pathlib import Path
